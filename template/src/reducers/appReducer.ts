@@ -1,4 +1,5 @@
 'use strict';
+import { produce } from 'immer';
 import {setStoreState} from 'src/actions/appActions';
 import {createReducer} from 'typesafe-actions';
 import {AppAction} from 'src/actions/actionTypes';
@@ -13,8 +14,10 @@ const initialState: AppReducerState = {
 
 const appReducer = createReducer<AppReducerState, AppAction>(
   initialState,
-).handleAction(setStoreState, (state, action) =>
-  Object.assign({}, initialState, state, action.payload),
+).handleAction(setStoreState, (state: AppReducerState, action: AppAction) =>
+produce((draft:AppReducerState,  action: AppAction) => {
+  draft = action.payload
+})
 );
 
 export default appReducer;

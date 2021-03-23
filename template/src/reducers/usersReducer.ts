@@ -1,4 +1,5 @@
 'use strict';
+import { produce } from 'immer';
 import {fetchUserAsync, setUser} from 'src/actions/usersActions';
 import {User} from 'src/types';
 import {createReducer} from 'typesafe-actions';
@@ -11,7 +12,11 @@ export interface UsersState {
 const initialState: UsersState = {};
 
 const usersReducer = createReducer<UsersState, UsersAction>(initialState)
-  .handleAction(fetchUserAsync.success, (state, action) => ({...state, user: action.payload}))
-  .handleAction(setUser, (state, action) => ({...state, user: action.payload}));
+  .handleAction(fetchUserAsync.success, produce((draft: UsersState, action: UsersAction) => {
+     draft.user = action.payload
+  }))
+  .handleAction(setUser, produce((draft: UsersState, action: UsersAction) => {
+    draft.user = action.payload
+  }));
 
 export default usersReducer;
