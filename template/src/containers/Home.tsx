@@ -1,17 +1,39 @@
 import React, {memo} from 'react';
 import {useTranslation} from 'react-i18next';
-import {Button, Platform, StyleSheet, Text, View} from 'react-native';
+import {Platform} from 'react-native';
 import {useDispatch} from 'react-redux';
+import styled from 'styled-components/native';
 import {fetchUserAsync} from 'src/actions/usersActions';
-import Colors from 'src/constants/colors';
 import useSelector from 'src/utils/useSelector';
+
+
+const Container = styled.View`
+  flex: 1;
+  background-color: #f5fcff;
+  align-items: center;
+  justify-content: center;
+`;
+
+const Text = styled.Text`
+  font-size: 16px;
+  text-align: center;
+  margin:10px;
+`;
+
+const Button = styled.Button`
+  height: 30px;
+  width: 80%;
+  margin:10px;
+`;
+
 
 function Home() {
   const user = useSelector((state) => state.users.user);
   const {t} = useTranslation();
   const dispatch = useDispatch();
+  
   const fetchUser = () => {
-    const userId = '1';
+    const userId = '2';
     dispatch(fetchUserAsync.request(userId));
   };
 
@@ -20,35 +42,18 @@ function Home() {
     android: t('androidInstruction'),
   });
 
+
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.welcome}>{t('welcome')}</Text>
-      <Text style={styles.instructions}>{t('instructions')}</Text>
-      <Text style={styles.instructions}>{instructions}</Text>
+    <Container >
+      <Text >{t('welcome')}</Text>
+      <Text >{t('instructions')}</Text>
+      <Text >{instructions}</Text>
       {user && <Text>user: </Text>}
       <Text>{JSON.stringify(user)}</Text>
       <Button title={t('fetchUser')} onPress={fetchUser} />
-    </View>
+    </Container>
   );
 }
 
 export default memo(Home);
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: Colors.aliceBlue,
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: Colors.darkCharcoal,
-    marginBottom: 5,
-  },
-});

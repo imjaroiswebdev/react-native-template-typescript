@@ -1,26 +1,35 @@
 import React, {memo} from 'react';
 import {useTranslation} from 'react-i18next';
-import {Button, StyleSheet, Text, View} from 'react-native';
-import Colors from 'src/constants/colors';
+import styled from 'styled-components/native';
+
+const Container = styled.View`
+  flex: 1;
+  background-color: #f5fcff;
+  align-items: center;
+  justify-content: center;
+`;
+
+const Text = styled.Text`
+  font-size: 16px;
+  text-align: center;
+  margin:10px;
+`;
+
+const Button = styled.Button`
+  height: 30px;
+  width: 80%;
+  margin:10px;
+`;
 
 function Settings() {
   const {t, i18n} = useTranslation();
   return (
-    <View style={styles.container}>
+    <Container>
       <Text>{t('settings')}</Text>
       <Button title={t('english')} onPress={() => i18n.changeLanguage('en')} />
       <Button title={t('french')} onPress={() => i18n.changeLanguage('fr')} />
-    </View>
+    </Container>
   );
 }
 
 export default memo(Settings);
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: Colors.aliceBlue,
-  },
-});
